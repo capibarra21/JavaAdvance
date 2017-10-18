@@ -7,7 +7,8 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 import javax.swing.JFrame;
-
+import java.io.*;
+import sun.audio.*;
 public class LoadImageApplet extends Applet {
     BufferedImage img;
 
@@ -18,7 +19,8 @@ public class LoadImageApplet extends Applet {
 
     public LoadImageApplet() {
        try {
-           img = ImageIO.read(new File("1.jpg"));
+           img = ImageIO.read(new File("3.jpg"));
+             
        } catch (IOException e) {
        }
 
@@ -33,10 +35,21 @@ public class LoadImageApplet extends Applet {
        }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+     throws Exception
+  {
+    // open the sound file as a Java input stream
+    String gongFile = "4.wav";
+    InputStream in = new FileInputStream(gongFile);
 
-        JFrame f = new JFrame("Load Image Sample");
-            
+    // create an audiostream from the inputstream
+    AudioStream audioStream = new AudioStream(in);
+
+    // play the audio clip with the audioplayer class
+    AudioPlayer.player.start(audioStream);
+    JFrame f = new JFrame("Load Image Sample");
+   
+        
         f.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent e) {
@@ -47,6 +60,7 @@ public class LoadImageApplet extends Applet {
         f.add(new LoadImageApplet());
         f.pack();
         f.setVisible(true);
-    }
+  }
+   
 }
 
